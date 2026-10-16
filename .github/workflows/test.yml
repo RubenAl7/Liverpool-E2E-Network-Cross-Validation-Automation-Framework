@@ -1,0 +1,46 @@
+name: Playwright E2E & Network Validation Suite
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  e2e-tests:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: 1. Install dependencies
+        run: npm ci
+
+      - name: Verify TypeScript compilation
+        run: npm run typecheck
+
+      - name: Install Playwright browsers & system dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: 2. Run Playwright tests in headless mode
+        run: npx playwright test --project=chromium
+        env:
+          CI: 'true'
+
+      - name: 3. Upload HTML report as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 30

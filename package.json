@@ -1,0 +1,33 @@
+{
+  "name": "liverpool-e2e-automation-framework",
+  "version": "1.0.0",
+  "description": "Marco de automatización E2E y validación multicapa de servicios (UI vs API) para Liverpool con Playwright y TypeScript",
+  "scripts": {
+    "test": "playwright test --project=chromium",
+    "test:headed": "playwright test --project=chromium --headed",
+    "test:unit": "playwright test tests/unit-framework.spec.ts --project=chromium",
+    "test:e2e": "playwright test tests/e2e-search-validation.spec.ts --project=chromium",
+    "test:e2e:headed": "playwright test tests/e2e-search-validation.spec.ts --project=chromium --headed",
+    "test:bonus": "playwright test tests/bonus-suite.spec.ts --project=chromium",
+    "test:parallel-browsers": "playwright test tests/e2e-search-validation.spec.ts --project=chromium --project=firefox --project=webkit",
+    "test:update-snapshots": "playwright test tests/bonus-suite.spec.ts --project=chromium --update-snapshots",
+    "typecheck": "tsc --noEmit",
+    "report": "playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "e2e",
+    "network-interception",
+    "axe-core",
+    "liverpool"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2"
+  }
+}
